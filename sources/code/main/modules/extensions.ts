@@ -2,7 +2,13 @@ import { resolve } from "url";
 import { commonCatches } from "./error";
 
 const safeStoragePromise = (import("electron/main"))
-  .then(main => main.safeStorage);
+  .then(main => main.safeStorage)
+  .then(safeStorage => ({
+    ...safeStorage,
+    ..."WEBCORD_DISABLE_SAFESTORAGE" in process.env && {
+      isEncryptionAvailable: () => false
+    }
+  }));
 
 async function fetchOrRead(url:URL, signal?:AbortSignal) {
   const readFile = import("fs/promises").then(fs => fs.readFile);
