@@ -51,6 +51,7 @@ export default function createMainWindow(...flags:MainWindowFlags): BrowserWindo
     width: mainWindowState.initState.width,
     backgroundColor: appInfo.backgroundColor,
     transparent: appConfig.value.settings.general.window.transparent,
+    frame: !appConfig.value.settings.general.window.transparent,
     show: false,
     webPreferences: {
       preload: resolve(app.getAppPath(), "app/code/renderer/preload/main.js"),
